@@ -1,0 +1,89 @@
+.buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  position: absolute;
+  right: 2vw;
+  bottom: 7vh;
+}
+
+.button {
+  display: block;
+  text-align: center;
+  margin: 0 1em;
+  background-color: transparent;
+  border: 1px solid black;
+  color: black;
+  padding: 0.5em 1.3em;
+  cursor: pointer;
+  font-size: 5.5vw;
+  // font-size: 2.5rem;
+  font-weight: lighter;
+  transition: all 0.3s ease-in-out;
+  font-family: "Heebo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
+  @media screen and (min-width: $phone) {
+    font-size: 3.8vw;
+  }
+
+  @media screen and (min-width: $tablet) {
+    font-size: 1.85vw;
+  }
+
+  @media screen and (min-width: $desktop) {
+    font-size: 1.5vw;
+  }
+
+  @media screen and (min-width: $desktop-full) {
+    font-size: 1.2vw;
+  }
+
+  &:hover {
+    background-color: $orange;
+    border-color: $orange;
+    color: white;
+  }
+
+  > img {
+    max-width: 35%;
+  }
+
+  // ????
+  // &:first-of-type {
+  //   font-size: 1.5rem;
+  //   border: 0px;
+  //   margin: 0;
+  // }
+
+  &.disabled {
+    background-color: rgba(128, 128, 128, 0.5);
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    color: white;
+  }
+
+  .type & {
+    margin: 2em 0;
+  }
+}
+
+.btn-download-pdf {
+  display: flex;
+  align-items: center;
+  padding: 0em 0.5em 0 0em;
+  justify-content: center;
+
+  @media screen and (min-width: $tablet) {
+    font-size: 1vw;
+  }
+
+  @media screen and (min-width: $desktop) {
+    font-size: 1.5vw;
+  }
+
+  @media screen and (min-width: $desktop-full) {
+    font-size: 1.2vw;
+  }
+
+}

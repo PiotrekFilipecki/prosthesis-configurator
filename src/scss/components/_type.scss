@@ -1,0 +1,156 @@
+.type-wrapper {
+  margin: 4em auto 0;
+  position: relative;
+
+  h2 {
+    font-size: 1.8vw;
+    font-weight: lighter;
+    position: absolute;
+    top: -50px;
+
+    @media all and (min-width: $desktop-full) {
+      font-size: 1.5vw;
+    }
+
+    &.above-header {
+      top: -10vh;
+    }
+
+    &.below-header {
+      top: -10vh;
+      right: 35%;
+    }
+  }
+}
+
+.col-wrapper {
+  height: 60vh;
+}
+
+.type-box {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 0 2vw;
+
+  img {
+    // max-width: 75%;
+    transform: scale(0.75);
+    transition: all 0.3s ease-in-out;
+  }
+
+  &.active {
+    // border: 1px solid rgba(0,0,0,1);
+    transition: all 0.3s ease-in-out;
+
+    img {
+      transform: scale(0.9);
+    }
+
+    h4 {
+      transition: all 0.3s ease-in-out;
+      background: #000000;
+      color: #ffffff;
+      border-color: black;
+    }
+  }
+
+  h4 {
+    // padding-top: 20px;
+    font-weight: lighter;
+    position: absolute;
+    background: white;
+    color: #000000;
+    padding: 0.5em 2vw;
+    border: 1px solid #000000;
+    font-size: 1.5rem;
+    top: 20%;
+    transition: all 0.3s ease-in-out;
+
+    &.right-header {
+      right: 20%;
+    }
+
+    &.left-header {
+      left: 20%;
+    }
+  }
+}
+
+.side-wrapper {
+  margin: 0 auto;
+  width: 85%;
+
+  @media all and (min-width: $tablet) {
+    width: 100%;
+  }
+}
+
+.side-box {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  img {
+    max-width: 75%;
+    transform: scale(1);
+    transition: all 0.3s ease-in-out;
+  }
+
+  &.active {
+    // border: 1px solid rgba(0,0,0,1);
+    transition: all 0.3s ease-in-out;
+
+    img {
+      transform: scale(1.1);
+    }
+
+    h4 {
+      transition: all 0.3s ease-in-out;
+      background: #000000;
+      color: #ffffff;
+      // border: 1px solid #ffffff;
+    }
+  }
+
+  h4 {
+    // padding-top: 20px;
+    font-weight: lighter;
+    position: absolute;
+    background: white;
+    color: #000000;
+    padding: 0.5em 3vw;
+    border: 1px solid #000000;
+    // font-size: 2rem;
+    top: 20%;
+    transition: all 0.3s ease-in-out;
+
+    padding: 0.5em 1.3em;
+    font-size: 5.5vw;
+    font-weight: lighter;
+    transition: all 0.3s ease-in-out;
+
+    @media screen and (min-width: $tablet) {
+      font-size: 2.5vw;
+    }
+    @media screen and (min-width: $desktop) {
+      font-size: 3.8vw;
+    }
+
+    @media screen and (min-width: $desktop) {
+      font-size: 1.5vw;
+    }
+
+    &.right-header {
+      right: 20%;
+    }
+
+    &.left-header {
+      left: 20%;
+    }
+  }
+}

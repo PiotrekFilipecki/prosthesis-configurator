@@ -1,0 +1,98 @@
+import { COLORS, FINISHING } from './styles';
+
+const SCALE = 3.5;
+const POSITION_Y = -6;
+const POSITION_X = -10;
+
+const PARTS = {
+  hand: {
+    id: 1,
+    name: 'Hand',
+    path: 'hand',
+    x: SCALE * 1 + POSITION_X,
+    y: SCALE * 1 + POSITION_Y,
+    width: SCALE * 20,
+    label: 'Hand',
+    selectedColor: COLORS.white,
+    selectedFinishing: FINISHING.matt,
+  },
+  wrist: {
+    id: 2,
+    name: 'Wrist',
+    path: 'wrist',
+    x: SCALE * 1 + POSITION_X,
+    y: SCALE * 1 + POSITION_Y,
+    width: SCALE * 20,
+    label: 'Hand',
+    selectedColor: COLORS.white,
+    selectedFinishing: FINISHING.matt,
+  },
+  wrist_circle: {
+    id: 3,
+    name: 'Wrist circle',
+    path: 'wrist_circle',
+    x: SCALE * 1 + POSITION_X,
+    y: SCALE * 1 + POSITION_Y,
+    width: SCALE * 20,
+    label: 'Hand',
+    selectedColor: COLORS.white,
+    selectedFinishing: FINISHING.matt,
+  },
+  body: {
+    id: 4,
+    name: 'Body',
+    path: 'body',
+    x: SCALE * 1 + POSITION_X,
+    y: SCALE * 1 + POSITION_Y,
+    width: SCALE * 20,
+    label: 'Hand',
+    selectedColor: COLORS.white,
+    selectedFinishing: FINISHING.matt,
+  },
+  mask_big: {
+    id: 5,
+    name: 'Mask big',
+    path: 'mask_big',
+    x: SCALE * 1 + POSITION_X,
+    y: SCALE * 1 + POSITION_Y,
+    width: SCALE * 20,
+    label: 'Hand',
+    selectedColor: COLORS.white,
+    selectedFinishing: FINISHING.matt,
+  },
+  mask_small: {
+    id: 6,
+    name: 'Mask small',
+    path: 'mask_small',
+    x: SCALE * 1 + POSITION_X,
+    y: SCALE * 1 + POSITION_Y,
+    width: SCALE * 20,
+    label: 'Hand',
+    selectedColor: COLORS.white,
+    selectedFinishing: FINISHING.matt,
+  },
+  safe: {
+    id: 7,
+    name: 'Safe',
+    path: 'safe',
+    x: SCALE * 1 + POSITION_X,
+    y: SCALE * 1 + POSITION_Y,
+    width: SCALE * 20,
+    label: 'Hand',
+    selectedColor: COLORS.white,
+    selectedFinishing: FINISHING.matt,
+  },
+  button_small: {
+    id: 8,
+    name: 'Button small',
+    path: 'button_small',
+    x: SCALE * 1 + POSITION_X,
+    y: SCALE * 1 + POSITION_Y,
+    width: SCALE * 20,
+    label: 'Hand',
+    selectedColor: COLORS.white,
+    selectedFinishing: FINISHING.matt,
+  },
+}
+
+export default PARTS;

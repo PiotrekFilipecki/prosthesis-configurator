@@ -1,0 +1,42 @@
+.box {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  // margin: 1vw 0.25vw;
+  width: 9vw;
+  height: 9vw;
+  border: 1px solid rgba(0,0,0,0.3);
+  background-color: transparent;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s linear;
+
+  &:hover {
+
+  }
+}
+
+.box-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  h3 {
+    margin: 0;
+    margin-top: 15px;
+  }
+}
+
+.defs-only {
+  position: absolute;
+  height: 0; width: 0;
+  overflow: none;
+  left: -100%;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+
+
+}

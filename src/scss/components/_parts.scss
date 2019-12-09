@@ -1,0 +1,36 @@
+.parts-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  width: 100%;
+  z-index: 2;
+  position: relative;
+
+  .parts-box {
+    text-align: center;
+    padding: 1.2vw 0;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.2);
+    transition: background-color 0.3s linear;
+    background-color: transparent;
+    margin: 3px 5px;
+    width: 18%;
+
+
+    &:first-of-type {
+      border-top: 1px solid rgba(0,0,0,0.2);
+      margin-top: 0;
+    }
+
+
+    &:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+
+    &.active {
+      background-color: black;
+      color: white;
+    }
+  }
+}

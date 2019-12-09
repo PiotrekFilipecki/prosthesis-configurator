@@ -1,0 +1,117 @@
+html, body {
+    height: 100%;
+
+}
+
+body {
+    margin: 0 auto;
+    font-family: "Heebo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+header {
+  margin: 0 0 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+main {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  padding: 2em 0;
+}
+
+.app-wrapper {
+  padding: 0 5%;
+
+  @media all and (min-width: $tablet) {
+    margin: 20px 0;
+  }
+
+  .logo {
+    position: absolute;
+    left: 2.5vw;
+
+    top: 2rem;
+    width: 1.8rem;
+    @media all and (min-width: $tablet) {
+      top: 5vh;
+      width: 4rem;
+    }
+
+  }
+}
+
+.app-header {
+  // padding: 15px 0;
+  // padding: 5vh 5vw;
+  padding-left: 8vw;
+
+  @media all and (min-width: $tablet) {
+    padding: 5vh 5vw 6vh 10vw;
+  }
+}
+
+.col-wrapper {
+  display: flex;
+
+  &.measurment  {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.col {
+  max-width: 50%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  &--center {
+
+    align-items: center;
+  }
+}
+
+.col-1 {
+  max-width: 33.33%;
+  flex: 1;
+}
+
+.col-2 {
+  display: flex;
+  max-width: 66.66%;
+  flex: 1;
+}
+
+// .measurment-col-1 {
+//   max-width: 40%;
+//   flex: 1;
+//   margin-left: 5.5%;
+// }
+
+// .measurment-col-2 {
+//   display: flex;
+//   max-width: 50%;
+//   flex: 1;
+// }
+
+@keyframes flipIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}

@@ -1,0 +1,51 @@
+.personalize {
+  width: 100%;
+
+  .row {
+    width: 100%;
+    display: flex;
+  }
+
+  .render-wrapper {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .left-render {
+    transform: scaleX(-0.7) scaleY(0.7) translateX(-5%);
+    // margin: 2em 0 0 18%;
+  }
+
+  .right-render {
+    transform: scale(0.7) translateX(-5%);
+    // margin: 2em 0 0 18%;
+  }
+}
+
+.image-wrapper {
+  position: relative;
+  width: 80%;
+  height: 50vh;
+  margin: 0 auto 0;
+}
+
+.image-element {
+  width: 20vw;
+  position: absolute;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    // filter:  url('/images/filter.svg#duotone');
+    // -webkit-filter: url('/images/filter.svg#duotone');
+  }
+
+  .image-hover {
+    -webkit-filter: drop-shadow(0px 0px 1000px rgba(255, 165, 0, 0.8));
+    filter: drop-shadow(0px 2px 20px rgba(255, 165, 0, 0.8));
+  }
+  .image-active {
+    -webkit-filter: drop-shadow(0px 2px 20px rgba(128, 128, 128, 0.8));
+    filter: drop-shadow(0px 2px 20px rgba(128, 128, 128, 0.8));
+  }
+}
