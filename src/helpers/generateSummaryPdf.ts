@@ -1,6 +1,6 @@
 import * as JsPdfModule from 'jspdf';
 import html2canvas from 'html2canvas';
-import { getObjectEntries } from './object';
+import { getObjectEntries } from '../shared/lib/object';
 import type { DetailsState } from '../types/details';
 import type {
   GenerateSummaryPdfInput,

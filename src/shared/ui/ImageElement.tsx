@@ -3,7 +3,7 @@ import React from 'react';
 import type {
   PersonalizeElement,
   ProsthesisType
-} from '../types/personalize';
+} from '../../types/personalize';
 
 const IMAGE_PATH = `${process.env.PUBLIC_URL}/images`;
 

@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import type { FinishingValue } from '../types/personalize';
+import type { FinishingValue } from '../../types/personalize';
 
 interface FinishingBoxProps {
   active: boolean;

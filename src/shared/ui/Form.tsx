@@ -3,7 +3,7 @@ import React from 'react';
 import type {
   MeasurementFieldId,
   OrderInfoFieldId
-} from '../types/details';
+} from '../../types/details';
 
 const getInputValue = (value: string | undefined | null): string => value ?? '';
 

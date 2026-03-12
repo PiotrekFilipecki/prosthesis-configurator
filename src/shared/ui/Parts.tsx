@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import type { PersonalizeElement } from '../types/personalize';
+import type { PersonalizeElement } from '../../types/personalize';
 
 interface PartsBoxProps {
   active: boolean;

@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import type { ColorId } from '../types/personalize';
+import type { ColorId } from '../../types/personalize';
 
 interface ColorBoxProps {
   onClick: (color: ColorId) => void;
