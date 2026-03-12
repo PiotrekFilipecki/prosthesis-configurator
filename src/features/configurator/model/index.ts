@@ -1,5 +1,7 @@
 export {
   assetsLoaded,
+  Actions,
+  type AppAction,
   nextStep,
   onInputMeasurment,
   onInputOrderInfo,
@@ -13,15 +15,17 @@ export {
   selectSide,
   selectType,
   startPersonalization
-} from '../../../actions';
+} from './actions';
 
 export {
   selectActivePart,
   selectApp,
+  selectCurrentStep,
+  selectCurrentStepConfig,
   selectDetails,
   selectPersonalize,
   selectPersonalizeElements
-} from '../../../selectors';
+} from './selectors';
 
 export {
   measurementFieldIds,
