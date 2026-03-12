@@ -1,13 +1,11 @@
 import React, { useCallback } from 'react';
-import { selectSide } from '../actions';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { selectDetails } from '../selectors';
-import type { Side } from '../types/details';
+import { selectDetails, selectSide, type Side } from '../model';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 const getSideImagePath = (side: Exclude<Side, null>): string =>
   `${process.env.PUBLIC_URL}/images/${side === 'R' ? 'right' : 'left'}.png`;
 
-const SideContainer: React.FC = () => {
+const SideScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const details = useAppSelector(selectDetails);
 
@@ -42,4 +40,4 @@ const SideContainer: React.FC = () => {
   );
 };
 
-export default SideContainer;
+export default SideScreen;

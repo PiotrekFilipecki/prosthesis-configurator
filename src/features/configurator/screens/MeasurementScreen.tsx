@@ -1,6 +1,16 @@
 import React, { useCallback, useMemo } from 'react';
-import { onInputMeasurment, onInputOrderInfo } from '../actions';
-import { getObjectEntries } from '../shared/lib/object';
+import {
+  measurementFieldIds,
+  onInputMeasurment,
+  onInputOrderInfo,
+  orderInfoFieldIds,
+  selectDetails,
+  selectPersonalize,
+  selectPersonalizeElements,
+  type MeasurementFieldId,
+  type OrderInfoFieldId
+} from '../model';
+import { getObjectEntries } from '../../../shared/lib/object';
 import {
   FormField,
   FormFieldOrder,
@@ -8,21 +18,10 @@ import {
   ImageElement,
   ImagesWrapper,
   ImagesWrapperLeft
-} from '../shared/ui';
-import {
-  selectDetails,
-  selectPersonalize,
-  selectPersonalizeElements
-} from '../selectors';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import {
-  measurementFieldIds,
-  orderInfoFieldIds,
-  type MeasurementFieldId,
-  type OrderInfoFieldId
-} from '../types/details';
+} from '../../../shared/ui';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-const MeasurmentContainer: React.FC = () => {
+const MeasurementScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const details = useAppSelector(selectDetails);
   const personalize = useAppSelector(selectPersonalize);
@@ -80,11 +79,7 @@ const MeasurmentContainer: React.FC = () => {
   const images = useMemo(
     () =>
       getObjectEntries(personalizeElements).map(([key, part]) => (
-        <ImageElement
-          key={`img_el_${key}`}
-          {...part}
-          type={personalize.active_type}
-        />
+        <ImageElement key={`img_el_${key}`} {...part} type={personalize.active_type} />
       )),
     [personalize.active_type, personalizeElements]
   );
@@ -108,4 +103,4 @@ const MeasurmentContainer: React.FC = () => {
   );
 };
 
-export default MeasurmentContainer;
+export default MeasurementScreen;

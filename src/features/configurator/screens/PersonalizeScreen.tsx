@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import {
+  colorIds,
+  finishingKeys,
   onMouseOut,
   onMouseOver,
+  selectActivePart,
   selectColor,
+  selectDetails,
   selectFinishing,
   selectPart,
-  startPersonalization
-} from '../actions';
-import {
-  selectActivePart,
-  selectDetails,
   selectPersonalize,
-  selectPersonalizeElements
-} from '../selectors';
-import { getObjectEntries } from '../shared/lib/object';
+  selectPersonalizeElements,
+  startPersonalization
+} from '../model';
+import { getObjectEntries } from '../../../shared/lib/object';
 import {
   ColorBox,
   ColorsWrapper,
@@ -24,11 +24,10 @@ import {
   ImagesWrapperLeft,
   PartsBox,
   PartsWrapper
-} from '../shared/ui';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { colorIds, finishingKeys } from '../types/personalize';
+} from '../../../shared/ui';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-const PersonalizeContainer: React.FC = () => {
+const PersonalizeScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const details = useAppSelector(selectDetails);
   const personalize = useAppSelector(selectPersonalize);
@@ -160,4 +159,4 @@ const PersonalizeContainer: React.FC = () => {
   );
 };
 
-export default PersonalizeContainer;
+export default PersonalizeScreen;

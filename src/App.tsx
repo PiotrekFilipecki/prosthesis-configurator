@@ -1,12 +1,18 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { assetsLoaded, nextStep, prevStep, restartPersonalization } from './actions';
-import MeasurmentContainer from './containers/MeasurmentContainer';
-import PersonalizeContainer from './containers/PersonalizeContainer';
-import SideContainer from './containers/SideContainer';
-import SummaryContainer from './containers/SummaryContainer';
-import TypeContainer from './containers/TypeContainer';
+import { assetsLoaded, nextStep, prevStep, restartPersonalization } from './features/configurator/model';
+import {
+  MeasurementScreen,
+  PersonalizeScreen,
+  SideScreen,
+  SummaryScreen,
+  TypeScreen
+} from './features/configurator';
 import loadAssets from './imagesList';
-import { selectApp, selectDetails, selectPersonalize } from './selectors';
+import {
+  selectApp,
+  selectDetails,
+  selectPersonalize
+} from './features/configurator/model';
 import { BackSummaryButton, Button, ButtonsWrapper, StepItem, StepsWrapper } from './shared/ui';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import type { StepId } from './types/app';
@@ -17,15 +23,15 @@ import 'react-step-progress-bar/styles.css';
 function renderStepView(stepId: StepId): JSX.Element | null {
   switch (stepId) {
     case 1:
-      return <SideContainer />;
+      return <SideScreen />;
     case 2:
-      return <TypeContainer />;
+      return <TypeScreen />;
     case 3:
-      return <PersonalizeContainer />;
+      return <PersonalizeScreen />;
     case 4:
-      return <MeasurmentContainer />;
+      return <MeasurementScreen />;
     case 5:
-      return <SummaryContainer />;
+      return <SummaryScreen />;
     default:
       return null;
   }

@@ -1,11 +1,13 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import downloadIco from '../component/download-pdf.svg';
+import downloadIco from '../../../component/download-pdf.svg';
 import {
+  measurementFieldIds,
+  orderInfoFieldIds,
   selectDetails,
   selectPersonalize,
   selectPersonalizeElements
-} from '../selectors';
-import { getObjectEntries } from '../shared/lib/object';
+} from '../model';
+import { getObjectEntries } from '../../../shared/lib/object';
 import {
   Button,
   ButtonsWrapper,
@@ -14,13 +16,12 @@ import {
   ImagesWrapperLeft,
   SummaryLine,
   SummaryOverlay
-} from '../shared/ui';
-import { useAppSelector } from '../store/hooks';
-import { measurementFieldIds, orderInfoFieldIds } from '../types/details';
+} from '../../../shared/ui';
+import { useAppSelector } from '../../../store/hooks';
 
 const getCurrentDate = (): string => new Date().toISOString().split('T')[0] ?? '';
 
-const SummaryContainer: React.FC = () => {
+const SummaryScreen: React.FC = () => {
   const details = useAppSelector(selectDetails);
   const personalize = useAppSelector(selectPersonalize);
   const personalizeElements = useAppSelector(selectPersonalizeElements);
@@ -37,7 +38,7 @@ const SummaryContainer: React.FC = () => {
     setShowOverlay(true);
 
     try {
-      const { generateSummaryPdf } = await import('../helpers/generateSummaryPdf');
+      const { generateSummaryPdf } = await import('../../../helpers/generateSummaryPdf');
       await generateSummaryPdf({
         targetElement,
         details,
@@ -116,4 +117,4 @@ const SummaryContainer: React.FC = () => {
   );
 };
 
-export default SummaryContainer;
+export default SummaryScreen;

@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
-import { selectType } from '../actions';
-import { selectPersonalize } from '../selectors';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import type { ProsthesisType } from '../types/personalize';
+import {
+  selectPersonalize,
+  selectType,
+  type ProsthesisType
+} from '../model';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 interface TypeOption {
   id: ProsthesisType;
@@ -33,7 +35,7 @@ const TYPE_OPTIONS: TypeOption[] = [
   }
 ];
 
-const TypeContainer: React.FC = () => {
+const TypeScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const personalize = useAppSelector(selectPersonalize);
 
@@ -68,4 +70,4 @@ const TypeContainer: React.FC = () => {
   );
 };
 
-export default TypeContainer;
+export default TypeScreen;
