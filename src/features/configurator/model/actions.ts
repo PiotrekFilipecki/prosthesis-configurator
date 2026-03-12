@@ -24,6 +24,7 @@ export const Actions = {
   SELECT_SIDE: 'SELECT_SIDE',
   INPUT_MEASURMENT: 'INPUT_MEASURMENT',
   INPUT_ORDER_INFO: 'INPUT_ORDER_INFO',
+  TOUCH_ALL_FIELDS: 'TOUCH_ALL_FIELDS',
   START_PERSONALIZATION: 'START_PERSONALIZATION',
   RESTART_PERSONALIZATION: 'RESTART_PERSONALIZATION'
 } as const;
@@ -116,6 +117,11 @@ export const onInputOrderInfo = (data: OrderInfoInputPayload) =>
     data
   } as const);
 
+export const touchAllFields = () =>
+  ({
+    type: Actions.TOUCH_ALL_FIELDS
+  } as const);
+
 export const startPersonalization = () =>
   ({
     type: Actions.START_PERSONALIZATION
@@ -141,6 +147,7 @@ const actionCreators = {
   selectSide,
   onInputMeasurment,
   onInputOrderInfo,
+  touchAllFields,
   startPersonalization,
   restartPersonalization
 };

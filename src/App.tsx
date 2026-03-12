@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { assetsLoaded, nextStep, prevStep, restartPersonalization } from './features/configurator/model';
+import {
+  assetsLoaded,
+  nextStep,
+  prevStep,
+  restartPersonalization,
+  touchAllFields
+} from './features/configurator/model';
 import {
   MeasurementScreen,
   PersonalizeScreen,
@@ -200,11 +206,14 @@ const App: React.FC = () => {
   }, [app.step, dispatch]);
 
   const handleNextStep = useCallback(() => {
+    if (app.step === 4 && !details.formValid) {
+      dispatch(touchAllFields());
+      return;
+    }
     dispatch(nextStep());
-  }, [dispatch]);
+  }, [app.step, details.formValid, dispatch]);
 
   const isContinueDisabled =
-    (app.step === 4 && !details.formValid) ||
     (app.step === 2 && !personalize.active_type) ||
     (app.step === 1 && !details.side);
 

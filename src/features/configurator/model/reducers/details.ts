@@ -1,9 +1,11 @@
 import { Actions, type AppAction } from '../actions';
 import createReducer from '../../../../shared/lib/createReducer';
-import type {
-  DetailsState,
-  MeasurementsState,
-  OrderInfoState
+import {
+  measurementFieldIds,
+  orderInfoFieldIds,
+  type DetailsState,
+  type MeasurementsState,
+  type OrderInfoState
 } from '../../../../types/details';
 
 const initialState: DetailsState = {
@@ -123,6 +125,23 @@ const details = createReducer<DetailsState, AppAction>(initialState, {
       orderInfo: nextOrderInfo,
       formValid: getFormValidity(state.measurments, nextOrderInfo)
     };
+  },
+  [Actions.TOUCH_ALL_FIELDS](state) {
+    const nextMeasurements = { ...state.measurments };
+    for (const id of measurementFieldIds) {
+      nextMeasurements[id] = { ...state.measurments[id], touched: true };
+    }
+
+    const nextOrderInfo = { ...state.orderInfo };
+    for (const id of orderInfoFieldIds) {
+      nextOrderInfo[id] = { ...state.orderInfo[id], touched: true };
+    }
+
+    return {
+      ...state,
+      measurments: nextMeasurements,
+      orderInfo: nextOrderInfo
+    };
   }
 });
 
@@ -132,6 +151,9 @@ function getFormValidity(measurments: MeasurementsState, orderInfo: OrderInfoSta
   );
 }
 
+const MEASUREMENT_MIN_CM = 0;
+const MEASUREMENT_MAX_CM = 200;
+
 function isValidMeasurement(value: string): boolean {
   const normalizedValue = value.trim();
 
@@ -139,7 +161,13 @@ function isValidMeasurement(value: string): boolean {
     return false;
   }
 
-  return Number.isFinite(Number(normalizedValue));
+  const num = Number(normalizedValue);
+
+  if (!Number.isFinite(num)) {
+    return false;
+  }
+
+  return num >= MEASUREMENT_MIN_CM && num <= MEASUREMENT_MAX_CM;
 }
 
 function isRequired(value: string): boolean {

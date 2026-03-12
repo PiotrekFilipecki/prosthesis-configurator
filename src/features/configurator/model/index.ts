@@ -5,6 +5,7 @@ export {
   nextStep,
   onInputMeasurment,
   onInputOrderInfo,
+  touchAllFields,
   onMouseOut,
   onMouseOver,
   prevStep,

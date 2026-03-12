@@ -46,7 +46,7 @@ export const FormField: React.FC<FormFieldProps> = ({
     />
     {units && <span>&nbsp;cm</span>}
     {touched && !valid && (
-      <p className="error">This field is required. Please provide data in cm.</p>
+      <p className="error">Please enter a number between 0-200 cm.</p>
     )}
   </div>
 );
@@ -71,7 +71,9 @@ export const FormFieldOrder: React.FC<FormFieldOrderProps> = ({
       value={getInputValue(value)}
       onChange={(event) => onChange(id, event.target.value)}
     />
-    {touched && !valid && <p className="error">This field is required.</p>}
+    {touched && !valid && (
+      <p className="error">This field is required. Please provide the information.</p>
+    )}
   </div>
 );
 
