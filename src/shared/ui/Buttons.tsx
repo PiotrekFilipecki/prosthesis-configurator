@@ -26,8 +26,18 @@ export const Button: React.FC<PropsWithChildren<BaseButtonProps>> = ({
   </button>
 );
 
-export const BackSummaryButton: React.FC<BaseButtonProps> = ({ label, onClick }) => (
-  <button className="button summary-back" type="button" onClick={onClick}>
+export const BackSummaryButton: React.FC<BaseButtonProps> = ({
+  className = '',
+  disabled = false,
+  label,
+  onClick
+}) => (
+  <button
+    className={`button summary-back ${disabled ? 'disabled' : ''} ${className}`.trim()}
+    type="button"
+    onClick={onClick}
+    disabled={disabled}
+  >
     {label}
   </button>
 );

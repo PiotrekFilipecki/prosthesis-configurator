@@ -58,6 +58,46 @@ footer {
   }
 }
 
+.app-progress {
+  flex: 1;
+  min-width: 0;
+}
+
+.step-stage {
+  position: relative;
+  width: 100%;
+  min-height: 50vh;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.step-stage--transitioning {
+  pointer-events: none;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.step-stage__mask {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  background: #ffffff;
+  will-change: clip-path, opacity;
+}
+
+.step-stage[data-direction='backward'] {
+  .step-stage__mask {
+    transform: scaleX(-1);
+  }
+}
+
+.step-panel {
+  width: 100%;
+  will-change: transform, opacity;
+}
+
 .col-wrapper {
   display: flex;
 
