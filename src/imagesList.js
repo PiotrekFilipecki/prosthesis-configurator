@@ -146,10 +146,10 @@
 // };
 
 
-const loadImage = url => new Promise((resolve, reject) => {
+const loadImage = (url) => new Promise((resolve, reject) => {
   const img = new Image();
-  img.onload = resolve(img);
-  img.onerror = reject(img);
+  img.onload = () => resolve(img);
+  img.onerror = () => reject(new Error(`Failed to load asset: ${url}`));
   img.src = url;
 });
 
@@ -157,18 +157,18 @@ export default async function loadAssets(assets = {}) {
   const loadedImages = {};
 
   try {
-    for (let key in assets) {
+    for (const key of Object.keys(assets)) {
       loadedImages[key] = {};
   
-      for (let image in assets[key]) {
-        let img = await loadImage(assets[key][image]);
+      for (const image of Object.keys(assets[key])) {
+        const img = await loadImage(assets[key][image]);
         loadedImages[key][image] = img;
       }
     }
 
     return loadedImages;
   } 
-  catch(e) {
-    return new Error('Failed to load assets');
+  catch (error) {
+    throw error;
   }
-} 
+}

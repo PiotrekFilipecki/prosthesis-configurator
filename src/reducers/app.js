@@ -2,8 +2,10 @@ import { Actions } from '../actions/index';
 import createReducer from '../helpers/createReducer';
 
 /* ====== */
+const FIRST_STEP = 1;
+
 const initialState = {
-  step: 1,
+  step: FIRST_STEP,
   steps: {
     1: {
       id: 1,
@@ -74,19 +76,25 @@ const initialState = {
   }
 };
 
+const LAST_STEP = Object.keys(initialState.steps).length;
+
+function getNextStep(step, offset) {
+  return Math.min(LAST_STEP, Math.max(FIRST_STEP, step + offset));
+}
+
 const app = createReducer(initialState, {
-  [Actions.NEXT_STEP](state, action) {
+  [Actions.NEXT_STEP](state) {
     return {
       ...state,
-      step: ++state.step
-    }
+      step: getNextStep(state.step, 1)
+    };
   },
-  [Actions.PREV_STEP](state, action) {
+  [Actions.PREV_STEP](state) {
     return {
       ...state,
-      step: --state.step
-    }
-  },
+      step: getNextStep(state.step, -1)
+    };
+  }
 });
 
 export default app;
