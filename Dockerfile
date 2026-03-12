@@ -1,38 +1,32 @@
-FROM node:9.1.0-slim
+FROM node:20-bookworm-slim AS base
 
-# Create app directory
-RUN mkdir -p /app
 WORKDIR /app
 
-# https://superuser.com/questions/1423486/issue-with-fetching-http-deb-debian-org-debian-dists-jessie-updates-inrelease
-RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# Install app dependencies
-RUN \
-  apt-get update && \
-  apt-get install -y python make g++ nginx-light git && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -f /etc/nginx/sites-available/default && \
-  echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
-  chown -R www-data:www-data /var/lib/nginx
+FROM base AS development
 
-# Stream the nginx logs to stdout and stderr
-RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
-    ln -sf /dev/stderr /var/log/nginx/error.log
+COPY . .
 
-COPY package.json /app/
-RUN npm install
+ENV HOST=0.0.0.0
+ENV CHOKIDAR_USEPOLLING=true
+ENV WATCHPACK_POLLING=true
 
-COPY . /app
+EXPOSE 3000
 
-# Build app
-RUN \
-  npm run build && \
-  rm -rf node_modules
+CMD ["npm", "start"]
 
-ADD docker/root /
+FROM base AS build
 
-CMD ["nginx"]
+COPY . .
+RUN npm run build
+
+FROM nginx:1.27-alpine AS runtime
+
+COPY docker/root/etc/nginx/sites-enabled/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /usr/share/nginx/html
 
 EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

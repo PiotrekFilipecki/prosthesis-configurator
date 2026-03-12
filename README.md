@@ -55,6 +55,38 @@ Runs the automated test suite once.
 
 Builds Sass and creates the production bundle in `build/`.
 
+## Docker
+
+The repository includes both production and development Docker setups.
+
+### Production
+
+Build and run the Nginx-based production image:
+
+```bash
+docker compose up --build app
+```
+
+The application will be available at `http://localhost:8080`.
+
+To stop it:
+
+```bash
+docker compose stop app
+```
+
+### Development
+
+Run the CRA development server and Sass watcher inside Docker:
+
+```bash
+docker compose up --build app-dev
+```
+
+The development app will be available at `http://localhost:3000`.
+
+The development service mounts the repository into the container and keeps `node_modules` in a dedicated Docker volume, so code changes on the host are reflected in the running app.
+
 ## Testing
 
 The current automated coverage focuses on regression-prone areas:
