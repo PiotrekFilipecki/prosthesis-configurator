@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from './contexts/ThemeContext';
+import './i18n';
 import App from './App';
 import store from './store';
 import './scss/main.css';
@@ -13,7 +15,9 @@ if (!rootElement) {
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </Provider>,
   rootElement
 );
