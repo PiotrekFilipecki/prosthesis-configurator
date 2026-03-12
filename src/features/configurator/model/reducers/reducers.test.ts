@@ -2,7 +2,10 @@ import { Actions } from '../actions';
 import app from './app';
 import details from './details';
 import personalize from './personalize';
-import { measurementFieldIds, orderInfoFieldIds } from '../types/details';
+import {
+  measurementFieldIds,
+  orderInfoFieldIds
+} from '../../../../types/details';
 
 describe('app reducer', () => {
   it('clamps wizard step boundaries', () => {
