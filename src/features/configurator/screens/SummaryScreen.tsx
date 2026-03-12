@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import downloadIco from '../../../component/download-pdf.svg';
 import {
   measurementFieldIds,
@@ -22,6 +23,7 @@ import { useAppSelector } from '../../../store/hooks';
 const getCurrentDate = (): string => new Date().toISOString().split('T')[0] ?? '';
 
 const SummaryScreen: React.FC = () => {
+  const { t } = useTranslation();
   const details = useAppSelector(selectDetails);
   const personalize = useAppSelector(selectPersonalize);
   const personalizeElements = useAppSelector(selectPersonalizeElements);
@@ -61,10 +63,10 @@ const SummaryScreen: React.FC = () => {
     <div className="col-wrapper summary">
       <div className=" summary-image summary-col-3">
         <SummaryLine
-          title="Model"
+          title={t('summary.model')}
           center
           content={`${personalize.model_names[personalize.active_type].name} - ${
-            details.side === 'L' ? 'Left' : 'Right'
+            details.side === 'L' ? t('side.left') : t('side.right')
           }`}
         />
 
@@ -94,7 +96,7 @@ const SummaryScreen: React.FC = () => {
             content={details.orderInfo[fieldId].value}
           />
         ))}
-        <div className="date">Date: {getCurrentDate()}</div>
+        <div className="date">{t('summary.date')}: {getCurrentDate()}</div>
       </div>
 
       <div className="summary-measurements summary-col-1">
@@ -108,7 +110,7 @@ const SummaryScreen: React.FC = () => {
       </div>
 
       <ButtonsWrapper>
-        <Button onClick={handleGeneratePdf} label="Download PDF" className="btn-download-pdf">
+        <Button onClick={handleGeneratePdf} label={t('buttons.downloadPdf')} className="btn-download-pdf">
           <img src={downloadIco} alt="" />
         </Button>
       </ButtonsWrapper>

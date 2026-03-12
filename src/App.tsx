@@ -20,8 +20,9 @@ import {
   selectDetails,
   selectPersonalize
 } from './features/configurator/model';
-import { BackSummaryButton, Button, ButtonsWrapper, StartupLoader, StepItem, StepsWrapper } from './shared/ui';
+import { BackSummaryButton, Button, ButtonsWrapper, LanguageSwitcher, StartupLoader, StepItem, StepsWrapper, ThemeToggle } from './shared/ui';
 import { useAppDispatch, useAppSelector } from './store/hooks';
+import { useTranslation } from 'react-i18next';
 import { stepIds } from './types/app';
 import type { StepId } from './types/app';
 import configLogo from './configLogo.png';
@@ -56,7 +57,16 @@ function renderStepView(stepId: StepId): JSX.Element | null {
   }
 }
 
+const STEP_LABEL_KEYS: Record<number, string> = {
+  1: 'steps.side',
+  2: 'steps.type',
+  3: 'steps.personalise',
+  4: 'steps.measurement',
+  5: 'steps.summary'
+};
+
 const App: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const app = useAppSelector(selectApp);
   const details = useAppSelector(selectDetails);
@@ -435,9 +445,13 @@ const App: React.FC = () => {
   const stepItems = useMemo(
     () =>
       Object.values(app.steps).map((step) => (
-        <StepItem key={step.id} label={step.label} active={app.step === step.id} />
+        <StepItem
+          key={step.id}
+          label={t(STEP_LABEL_KEYS[step.id] ?? 'steps.side')}
+          active={app.step === step.id}
+        />
       )),
-    [app.step, app.steps]
+    [app.step, app.steps, t]
   );
 
   const startStepTransition = useCallback(
@@ -490,6 +504,8 @@ const App: React.FC = () => {
         >
           <img className="logo" src={configLogo} alt="Glaze Prosthetics" />
           <header ref={appHeaderRef} className="app-header">
+            <LanguageSwitcher />
+            <ThemeToggle />
             <StepsWrapper>{stepItems}</StepsWrapper>
             <div ref={progressWrapperRef} className="app-progress">
               <ProgressBar percent={app.steps[app.step].barPercent} filledBackground="#FC4A1A" />
@@ -515,19 +531,19 @@ const App: React.FC = () => {
           <div className={displayedStep === 5 ? 'summary-buttons' : 'buttons'}>
             <ButtonsWrapper>
               {displayedStep > 1 && displayedStep < 5 && (
-                <Button onClick={handlePreviousStep} disabled={isStepTransitioning} label="< Back" />
+                <Button onClick={handlePreviousStep} disabled={isStepTransitioning} label={t('buttons.back')} />
               )}
 
               {displayedStep === 5 && (
                 <BackSummaryButton
                   onClick={handlePreviousStep}
                   disabled={isStepTransitioning}
-                  label="< Back"
+                  label={t('buttons.back')}
                 />
               )}
 
               {displayedStep < 5 && (
-                <Button onClick={handleNextStep} disabled={isContinueDisabled} label="Continue" />
+                <Button onClick={handleNextStep} disabled={isContinueDisabled} label={t('buttons.continue')} />
               )}
             </ButtonsWrapper>
           </div>

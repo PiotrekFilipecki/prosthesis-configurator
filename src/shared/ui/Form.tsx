@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type {
   MeasurementFieldId,
   OrderInfoFieldId
@@ -32,24 +33,27 @@ export const FormField: React.FC<FormFieldProps> = ({
   units = false,
   valid,
   value
-}) => (
-  <div className="custom-form__wrapper">
-    <label htmlFor={id} className="custom-form__label">
-      {label}
-    </label>
-    <input
-      type={type}
-      className="custom-form__input"
-      id={id}
-      value={getInputValue(value)}
-      onChange={(event) => onChange(id, event.target.value)}
-    />
-    {units && <span>&nbsp;cm</span>}
-    {touched && !valid && (
-      <p className="error">Please enter a number between 0-200 cm.</p>
-    )}
-  </div>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <div className="custom-form__wrapper">
+      <label htmlFor={id} className="custom-form__label">
+        {label}
+      </label>
+      <input
+        type={type}
+        className="custom-form__input"
+        id={id}
+        value={getInputValue(value)}
+        onChange={(event) => onChange(id, event.target.value)}
+      />
+      {units && <span>&nbsp;cm</span>}
+      {touched && !valid && (
+        <p className="error">{t('form.measurementError')}</p>
+      )}
+    </div>
+  );
+};
 
 export const FormFieldOrder: React.FC<FormFieldOrderProps> = ({
   id,
@@ -59,23 +63,26 @@ export const FormFieldOrder: React.FC<FormFieldOrderProps> = ({
   type,
   valid,
   value
-}) => (
-  <div className="custom-form__wrapper">
-    <label htmlFor={id} className="custom-form__label">
-      {label}
-    </label>
-    <input
-      type={type}
-      className="custom-form__input"
-      id={id}
-      value={getInputValue(value)}
-      onChange={(event) => onChange(id, event.target.value)}
-    />
-    {touched && !valid && (
-      <p className="error">This field is required. Please provide the information.</p>
-    )}
-  </div>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <div className="custom-form__wrapper">
+      <label htmlFor={id} className="custom-form__label">
+        {label}
+      </label>
+      <input
+        type={type}
+        className="custom-form__input"
+        id={id}
+        value={getInputValue(value)}
+        onChange={(event) => onChange(id, event.target.value)}
+      />
+      {touched && !valid && (
+        <p className="error">{t('form.requiredError')}</p>
+      )}
+    </div>
+  );
+};
 
 export const FormWrapper: React.FC<PropsWithChildren<{}>> = ({ children }) => (
   <div className="form-wrapper">

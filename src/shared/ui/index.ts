@@ -1,4 +1,6 @@
 export { Button, BackSummaryButton, ButtonsWrapper } from './Buttons';
+export { ThemeToggle } from './ThemeToggle';
+export { LanguageSwitcher } from './LanguageSwitcher';
 export { ColorBox, ColorsWrapper } from './Colors';
 export { FinishingBox, FinishingWrapper } from './Finishing';
 export { FormField, FormFieldOrder, FormWrapper } from './Form';

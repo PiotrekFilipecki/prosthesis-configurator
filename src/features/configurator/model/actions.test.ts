@@ -44,8 +44,8 @@ describe('action creators', () => {
   });
 
   it('selectSide returns correct action', () => {
-    const action = selectSide('left');
-    expect(action).toEqual({ type: Actions.SELECT_SIDE, typ: 'left' });
+    const action = selectSide('L');
+    expect(action).toEqual({ type: Actions.SELECT_SIDE, typ: 'L' });
   });
 
   it('onInputMeasurment returns correct action', () => {

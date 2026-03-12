@@ -1,0 +1,34 @@
+{
+  "steps": {
+    "side": "Strona",
+    "type": "Typ",
+    "personalise": "Personalizacja",
+    "measurement": "Wymiary",
+    "summary": "Podsumowanie"
+  },
+  "side": {
+    "left": "Lewa",
+    "right": "Prawa",
+    "leftAlt": "Proteza lewa",
+    "rightAlt": "Proteza prawa"
+  },
+  "type": {
+    "aboveElbow": "Powyżej łokcia",
+    "belowElbow": "Poniżej łokcia",
+    "glazeSmart": "Glaze Smart",
+    "glazeSport": "Glaze Sport"
+  },
+  "buttons": {
+    "continue": "Dalej",
+    "back": "< Wstecz",
+    "downloadPdf": "Pobierz PDF"
+  },
+  "summary": {
+    "model": "Model",
+    "date": "Data"
+  },
+  "form": {
+    "measurementError": "Wprowadź liczbę od 0 do 200 cm.",
+    "requiredError": "To pole jest wymagane. Proszę podać informacje."
+  }
+}

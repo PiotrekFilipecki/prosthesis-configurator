@@ -1,0 +1,34 @@
+{
+  "steps": {
+    "side": "Side",
+    "type": "Type",
+    "personalise": "Personalise",
+    "measurement": "Measurement Info",
+    "summary": "Summary"
+  },
+  "side": {
+    "left": "Left",
+    "right": "Right",
+    "leftAlt": "Left prosthetic",
+    "rightAlt": "Right prosthetic"
+  },
+  "type": {
+    "aboveElbow": "Above Elbow",
+    "belowElbow": "Below Elbow",
+    "glazeSmart": "Glaze Smart",
+    "glazeSport": "Glaze Sport"
+  },
+  "buttons": {
+    "continue": "Continue",
+    "back": "< Back",
+    "downloadPdf": "Download PDF"
+  },
+  "summary": {
+    "model": "Model",
+    "date": "Date"
+  },
+  "form": {
+    "measurementError": "Please enter a number between 0-200 cm.",
+    "requiredError": "This field is required. Please provide the information."
+  }
+}
