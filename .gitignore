@@ -1,2 +1,5 @@
 node_modules
 build
+coverage
+.env
+repo_evaluator-f2p-no-llm/
