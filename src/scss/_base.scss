@@ -67,12 +67,14 @@ footer {
   position: relative;
   width: 100%;
   min-height: 50vh;
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
 }
 
 .step-stage--transitioning {
   pointer-events: none;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .step-stage__mask {
@@ -81,13 +83,7 @@ footer {
   z-index: 2;
   opacity: 0;
   pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(252, 74, 26, 0.18) 42%,
-    rgba(255, 255, 255, 0.08) 62%,
-    rgba(4, 4, 4, 0.86) 100%
-  );
+  background: #ffffff;
   will-change: clip-path, opacity;
 }
 
@@ -98,8 +94,6 @@ footer {
 }
 
 .step-panel {
-  position: relative;
-  z-index: 1;
   width: 100%;
   will-change: transform, opacity;
 }
