@@ -1,50 +1,64 @@
-import React, { Component } from 'react'
-import {connect} from 'react-redux';
-import { Button, ButtonsWrapper } from '../component/Buttons'
-import {selectType} from '../actions/index';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectType } from '../actions/index';
+import { selectPersonalize } from '../selectors';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    selectType: (param) => dispatch(selectType(param)),
+const TYPE_OPTIONS = [
+  {
+    id: 'smart_arm',
+    image: '/images/smart_arm/render.png',
+    label: 'Glaze Smart'
+  },
+  {
+    id: 'sport_arm',
+    image: '/images/sport_arm/render.png',
+    label: 'Glaze Sport'
+  },
+  {
+    id: 'smart_forearm',
+    image: '/images/smart_forearm/render.png',
+    label: 'Glaze Smart'
+  },
+  {
+    id: 'sport_forearm',
+    image: '/images/sport_forearm/render.png',
+    label: 'Glaze Sport'
   }
-};
+];
 
-class TypeContainer extends Component {
-  render() {
-    const {app, personalize} = this.props;
-    return (
-      <div className="col-wrapper type">
+function TypeContainer() {
+  const dispatch = useDispatch();
+  const personalize = useSelector(selectPersonalize);
 
+  const handleSelectType = useCallback(
+    (type) => {
+      dispatch(selectType(type));
+    },
+    [dispatch]
+  );
 
-        <div className="type-wrapper">
-          <h2 className="above-header">Above Elbow</h2>
-          <h2 className="below-header">Below Elbow</h2>
-          <div className="col-wrapper">
-            <div className={`col type-box col--center ${personalize.active_type === 'smart_arm' ? 'active' : ''}`} onClick={() => this.props.selectType('smart_arm')} >
-              <img src={process.env.PUBLIC_URL + '/images/smart_arm/render.png'} alt="" />
-              <h4>Glaze Smart</h4>
+  return (
+    <div className="col-wrapper type">
+      <div className="type-wrapper">
+        <h2 className="above-header">Above Elbow</h2>
+        <h2 className="below-header">Below Elbow</h2>
+        <div className="col-wrapper">
+          {TYPE_OPTIONS.map((option) => (
+            <div
+              key={option.id}
+              className={`col type-box col--center ${
+                personalize.active_type === option.id ? 'active' : ''
+              }`}
+              onClick={() => handleSelectType(option.id)}
+            >
+              <img src={`${process.env.PUBLIC_URL}${option.image}`} alt={option.label} />
+              <h4>{option.label}</h4>
             </div>
-            <div className={`col type-box col--center ${personalize.active_type === 'sport_arm' ? 'active' : ''}`}  onClick={() => this.props.selectType('sport_arm')} >
-              <img src={process.env.PUBLIC_URL + '/images/sport_arm/render.png'} alt="" />
-              <h4>Glaze Sport</h4>
-            </div>
-            <div className={`col type-box col--center ${personalize.active_type === 'smart_forearm' ? 'active' : ''}`}  onClick={() => this.props.selectType('smart_forearm')} >
-              <img src={process.env.PUBLIC_URL + '/images/smart_forearm/render.png'} alt="" />
-              <h4>Glaze Smart</h4>
-            </div>
-            {/* <div className={`col type-box col--center ${personalize.active_type === 'smart_forearm_new' ? 'active' : ''}`}  onClick={() => this.props.selectType('smart_forearm_new')} >
-              <img src={process.env.PUBLIC_URL + '/images/smart_forearm_new/render.png'} alt="" />
-              <h4>Smart forearm NEW</h4>
-            </div> */}
-            <div className={`col type-box col--center ${personalize.active_type === 'sport_forearm' ? 'active' : ''}`} onClick={() => this.props.selectType('sport_forearm')} >
-              <img src={process.env.PUBLIC_URL + '/images/sport_forearm/render.png'} alt="" />
-              <h4>Glaze Sport</h4>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    )
-  }
+    </div>
+  );
 }
 
-export default connect(state => state, mapDispatchToProps)(TypeContainer);
+export default TypeContainer;

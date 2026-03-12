@@ -1,168 +1,129 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PersonalizeContainer from './containers/PersonalizeContainer';
 import MeasurmentContainer from './containers/MeasurmentContainer';
 import SummaryContainer from './containers/SummaryContainer';
 import TypeContainer from './containers/TypeContainer';
 import SideContainer from './containers/SideContainer';
-import { connect } from 'react-redux';
-import {
-  assetsLoaded,
-  nextStep,
-  prevStep,
-  nextBarStep,
-  prevBarStep,
-  restartPersonalization
-} from './actions/index';
+import { useDispatch, useSelector } from 'react-redux';
+import { assetsLoaded, nextStep, prevStep, restartPersonalization } from './actions/index';
 import loadAssets from './imagesList';
-
 import { Button, BackSummaryButton, ButtonsWrapper } from './component/Buttons';
-import { StepItem, StepsWrapper, StepsTitle } from './component/Steps';
-import personalize from './reducers/personalize';
+import { StepItem, StepsWrapper } from './component/Steps';
 import 'react-step-progress-bar/styles.css';
-import { ProgressBar, Step } from 'react-step-progress-bar';
+import { ProgressBar } from 'react-step-progress-bar';
 import configLogo from './configLogo.png';
+import { selectApp, selectDetails, selectPersonalize } from './selectors';
 
-const mapStateToProps = state => state;
-const mapDispatchToProps = dispatch => {
-  return {
-    assetsLoaded: () => dispatch(assetsLoaded()),
-    nextStep: () => dispatch(nextStep()),
-    prevStep: () => dispatch(prevStep()),
-    nextBarStep: () => dispatch(nextBarStep()),
-    prevBarStep: () => dispatch(prevBarStep()),
-    restartPersonalization: () => dispatch(restartPersonalization())
-  };
-};
-
-const RenderSide = (props, state) => {
-  if (props) {
-    return <PersonalizeContainer />;
-  } else {
-    return <div>left</div>;
+function renderStepView(stepId) {
+  switch (stepId) {
+    case 1:
+      return <SideContainer />;
+    case 2:
+      return <TypeContainer />;
+    case 3:
+      return <PersonalizeContainer />;
+    case 4:
+      return <MeasurmentContainer />;
+    case 5:
+      return <SummaryContainer />;
+    default:
+      return null;
   }
-};
-class App extends Component {
-  constructor(props) {
-    super(props);
+}
 
-    this.renderSteps = this.renderSteps.bind(this);
-  }
+function App() {
+  const dispatch = useDispatch();
+  const app = useSelector(selectApp);
+  const details = useSelector(selectDetails);
+  const personalize = useSelector(selectPersonalize);
 
-  componentDidMount() {
-    loadAssets().then(assets => {
-      // this.setState({assets, loaded: true})
-      this.props.assetsLoaded();
-    });
-  }
+  useEffect(() => {
+    let isMounted = true;
 
-  renderSteps() {
-    const { app } = this.props;
-    return Object.keys(app.steps).map((key, i) => (
+    loadAssets()
+      .catch(() => null)
+      .finally(() => {
+        if (isMounted) {
+          dispatch(assetsLoaded());
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch]);
+
+  const stepItems = useMemo(
+    () =>
+      Object.keys(app.steps).map((key, index) => (
       <StepItem
-        key={`step_${i}`}
+        key={`step_${index}`}
         label={app.steps[key].label}
         active={app.step === app.steps[key].id}
       />
-    ));
-  }
+      )),
+    [app.step, app.steps]
+  );
 
-  renderProgressBarSteps() {
-    const { app } = this.props;
-    return Object.keys(app.steps).map(i => app.steps[i].barPercent);
-  }
-
-  // renderProgressBarStep() {
-  //   <Step>
-  //   {({ accomplished, index, position }) => (
-  //     <div className={`indexedStep ${accomplished ? "accomplished" : ""}`}>
-
-  //     </div>
-  //   )}
-  // </Step>
-  // }
-
-  renderStepsButton() {}
-
-  renderStepsView(stepId) {
-    switch (stepId) {
-      case 1:
-        return <SideContainer />;
-      case 2:
-        return <TypeContainer />;
-      case 3:
-        return <RenderSide />;
-      case 4:
-        return <MeasurmentContainer />;
-      case 5:
-        return <SummaryContainer />;
-      default:
-        return;
+  const handlePreviousStep = useCallback(() => {
+    if (app.step === 3) {
+      dispatch(restartPersonalization());
     }
-  }
 
-  render() {
-    const { app, details, personalize } = this.props;
+    dispatch(prevStep());
+  }, [app.step, dispatch]);
 
-    return !this.props.assetsLoaded ? (
+  const handleNextStep = useCallback(() => {
+    dispatch(nextStep());
+  }, [dispatch]);
+
+  const isContinueDisabled =
+    (app.step === 4 && !details.formValid) ||
+    (app.step === 2 && !personalize.active_type) ||
+    (app.step === 1 && !details.side);
+
+  return !personalize.assetsLoaded ? (
       <div className="loader-spiner">Loading...</div>
     ) : (
       <div className="app-wrapper">
         <img className="logo" src={configLogo} alt="Glaze Prosthetics" />
         <header className="app-header">
-          {/* <StepsTitle title={app.steps[app.step].title} /> */}
-          <StepsWrapper>{this.renderSteps()}</StepsWrapper>
+          <StepsWrapper>{stepItems}</StepsWrapper>
           <ProgressBar
             percent={app.steps[app.step].barPercent}
             filledBackground="#FC4A1A"
           />
         </header>
-        {/* {app.step === 3 && (
-          <div>Model: {personalize.model_names[personalize.active_type].name}</div>
-        )} */}
-
         <main className="app-main last-step">
-          {this.renderStepsView(app.step)}
+          {renderStepView(app.step)}
         </main>
         <div className={`${app.step === 5 ? 'summary-buttons' : 'buttons'}`}>
           <ButtonsWrapper>
             {app.step > 1 && app.step < 5 && (
               <Button
-                onClick={() => {
-                  if (app.step === 3) {
-                    this.props.restartPersonalization();
-                  }
-                  this.props.prevStep();
-                }}
+                onClick={handlePreviousStep}
                 label={'< Back'}
               />
             )}
 
             {app.step === 5 && (
               <BackSummaryButton
-                onClick={this.props.prevStep}
+                onClick={handlePreviousStep}
                 label={'< Back'}
               />
             )}
 
             {app.step < 5 && (
               <Button
-                onClick={this.props.nextStep}
-                disabled={
-                  (app.step === 4 && !details.formValid) ||
-                  (app.step === 2 && !personalize.active_type) ||
-                  (app.step === 1 && !details.side)
-                }
+                onClick={handleNextStep}
+                disabled={isContinueDisabled}
                 label={'Continue'}
               />
             )}
           </ButtonsWrapper>
         </div>
       </div>
-    );
-  }
+  );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default App;

@@ -1,9 +1,43 @@
-## Glaze creator
+## Glaze Creator
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+Web configurator for Glaze prosthetics built with React and Redux.
 
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+The project has been modernized from class components to function components with hooks and updated to a current Create React App toolchain. The core wizard flow remains the same:
+
+1. Select prosthetic side
+2. Select product type
+3. Personalize colors and finishing
+4. Provide measurements and order details
+5. Review the summary and export a PDF
+
+## Stack
+
+- React 17
+- React Redux hooks (`useSelector`, `useDispatch`)
+- Redux with plain reducers
+- Sass compiled to `src/scss/main.css`
+- `html2canvas` + `jsPDF` for PDF export
+
+## Project Structure
+
+- `src/App.js`: main wizard shell and step navigation
+- `src/containers/`: step-level containers
+- `src/component/`: reusable presentational components
+- `src/reducers/`: Redux state for app flow, details, and personalization
+- `src/selectors/`: centralized Redux selectors
+- `src/helpers/generateSummaryPdf.js`: extracted PDF generation logic
+
+## Data Flow
+
+The configurator uses a simple unidirectional flow:
+
+`UI event -> action creator -> reducer -> selector -> component render`
+
+Important state slices:
+
+- `app`: current wizard step and step metadata
+- `details`: measurements, order info, side, and form validity
+- `personalize`: active model, active part, hover state, colors, and finishing
 
 ## Available Scripts
 
@@ -11,27 +45,33 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Starts the Sass watcher and the development server in parallel.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### `npm test -- --watchAll=false`
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](#running-tests) for more information.
+Runs the automated test suite once.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds Sass and creates the production bundle in `build/`.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Testing
 
-See the section about [deployment](#deployment) for more information.
+The current automated coverage focuses on regression-prone areas:
 
-### `npm run eject`
+- reducer immutability
+- wizard step boundaries
+- form validation rules
+- basic app render with Redux provider
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Refactoring Notes
+
+- Reducers now use immutable updates. Keep that rule for every future change.
+- Prefer selectors from `src/selectors/` over subscribing to the entire store.
+- Keep PDF code outside React components. `SummaryContainer` only orchestrates the action and owns the preview `ref`.
+- Add comments only where the intent is not obvious, especially around step orchestration and export logic.
+
+## Known Follow-ups
+
+- Sass still uses legacy `@import` and slash division syntax, which produces deprecation warnings during build.
+- The folder name `src/component/` is legacy and can be renamed later if the team wants a broader cleanup pass.

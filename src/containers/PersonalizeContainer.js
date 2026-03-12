@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-// import { images } from '../imagesList';
-import { connect } from 'react-redux';
-
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ColorsWrapper, ColorBox } from '../component/Colors';
 import { FinishingWrapper, FinishingBox } from '../component/Finishing';
 import { PartsWrapper, PartsBox } from '../component/Parts';
@@ -19,94 +17,78 @@ import {
   onMouseOut,
   startPersonalization
 } from '../actions/index';
+import {
+  selectDetails,
+  selectPersonalize,
+  selectPersonalizeElements
+} from '../selectors';
 
-const mapStateToProps = state => state;
+function PersonalizeContainer() {
+  const dispatch = useDispatch();
+  const details = useSelector(selectDetails);
+  const personalize = useSelector(selectPersonalize);
+  const personalizeElements = useSelector(selectPersonalizeElements);
 
-const mapDispatchToProps = dispatch => {
-  return {
-    selectColor: param => dispatch(selectColor(param)),
-    selectFinishing: param => dispatch(selectFinishing(param)),
-    onMouseOver: param => dispatch(onMouseOver(param)),
-    onMouseOut: param => dispatch(onMouseOut(param)),
-    selectPart: param => dispatch(selectPart(param)),
-    startPersonalization: () => dispatch(startPersonalization())
-  };
-};
+  useEffect(() => {
+    // Reinitialize the active part when the user switches prosthetic type.
+    dispatch(startPersonalization());
+  }, [dispatch, personalize.active_type]);
 
-class PersonalizeContainer extends Component {
-  constructor(props) {
-    super(props);
+  const handleSelectColor = useCallback(
+    (color) => {
+      dispatch(selectColor(color));
+    },
+    [dispatch]
+  );
 
-    this.state = {
-      loaded: false
-    };
+  const handleSelectFinishing = useCallback(
+    (finishing) => {
+      dispatch(selectFinishing(finishing));
+    },
+    [dispatch]
+  );
 
-    this.renderColors = this.renderColors.bind(this);
-    this.renderFinishing = this.renderFinishing.bind(this);
-    this.renderImages = this.renderImages.bind(this);
-    this.renderParts = this.renderParts.bind(this);
-    this.onSelectColor = this.onSelectColor.bind(this);
-    this.onSelectFinishing = this.onSelectFinishing.bind(this);
-    this.onSelectPart = this.onSelectPart.bind(this);
-    this.onMouseOut = this.onMouseOut.bind(this);
-    this.onMouseOver = this.onMouseOver.bind(this);
+  const handleSelectPart = useCallback(
+    (partId) => {
+      dispatch(selectPart(partId));
+    },
+    [dispatch]
+  );
 
-  }
+  const handleMouseOver = useCallback(
+    (partId) => {
+      dispatch(onMouseOver(partId));
+    },
+    [dispatch]
+  );
 
-  componentDidMount() {
-    this.props.startPersonalization();
-  }
+  const handleMouseOut = useCallback(() => {
+    dispatch(onMouseOut());
+  }, [dispatch]);
 
-  componentDidUpdate(prev) {
-    if (prev.personalize.active_type !== this.props.personalize.active_type) {
-      this.props.startPersonalization();
-    }
-  }
-
-  /**
-   * Handles
-   */
-  onSelectColor(color) {
-    this.props.selectColor(color);
-  }
-
-  onSelectFinishing(finishing) {
-    this.props.selectFinishing(finishing);
-  }
-
-  onSelectPart(id) {
-    this.props.selectPart(id);
-  }
-
-  onMouseOver(id) {
-    this.props.onMouseOver(id);
-  }
-
-  onMouseOut(id) {
-    this.props.onMouseOut();
-  }
-  /**
-   * Renders
-   */
-  renderColors() {
-    const { personalize } = this.props;
-    return Object.keys(personalize.colors).map((key, i) => (
+  const colors = useMemo(
+    () =>
+      Object.keys(personalize.colors).map((key, index) => (
       <ColorBox
-        key={`color_${i}`}
-        onClick={this.onSelectColor}
+        key={`color_${index}`}
+        onClick={handleSelectColor}
         color={key}
         hex={personalize.colors[key].hex}
-        /*  active={personalize.active && personalize.type[personalize.active_type][personalize.active].selectedColor === personalize.colors[key]} */
+        active={
+          personalize.active &&
+          personalize.type[personalize.active_type][personalize.active].selectedColor === key
+        }
       />
-    ));
-  }
+      )),
+    [handleSelectColor, personalize.colors]
+  );
 
-  renderFinishing() {
-    const { personalize } = this.props;
-    return Object.keys(personalize.finishing).map((key, i) => (
+  const finishingOptions = useMemo(
+    () =>
+      Object.keys(personalize.finishing).map((key, index) => (
       <FinishingBox
-        key={`finishing_${i}`}
-        onClick={this.onSelectFinishing}
+        key={`finishing_${index}`}
+        onClick={handleSelectFinishing}
         finishing={personalize.finishing[key]}
         active={
           personalize.active &&
@@ -114,84 +96,60 @@ class PersonalizeContainer extends Component {
             .selectedFinishing === personalize.finishing[key]
         }
       />
-    ));
-  }
+      )),
+    [handleSelectFinishing, personalize]
+  );
 
-  renderParts() {
-    const { personalize } = this.props;
-    return Object.keys(personalize.type[personalize.active_type]).map(
-      (key, i) => (
+  const parts = useMemo(
+    () =>
+      Object.keys(personalizeElements).map((key, index) => (
         <PartsBox
-          key={`parts_${i}`}
-          onMouseOver={this.onMouseOver}
-          onMouseOut={this.onMouseOut}
-          onClick={this.onSelectPart}
-          part={personalize.type[personalize.active_type][key]}
+          key={`parts_${index}`}
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+          onClick={handleSelectPart}
+          part={personalizeElements[key]}
           active={personalize.active === key}
         />
-      )
-    );
-  }
+      )),
+    [handleMouseOut, handleMouseOver, handleSelectPart, personalize.active, personalizeElements]
+  );
 
-  renderImages() {
-    const { personalize } = this.props;
-    return Object.keys(personalize.type[personalize.active_type]).map(
-      (key, i) => (
+  const images = useMemo(
+    () =>
+      Object.keys(personalizeElements).map((key, index) => (
         <ImageElement
-          key={`img_el_${i}`}
-          {...personalize.type[personalize.active_type][key]}
+          key={`img_el_${index}`}
+          {...personalizeElements[key]}
           type={personalize.active_type}
-          hover={
-            personalize.hover ===
-            personalize.type[personalize.active_type][key].id
-          }
-          active={
-            personalize.active ===
-            personalize.type[personalize.active_type][key].id
-          }
+          hover={personalize.hover === personalizeElements[key].id}
+          active={personalize.active === key}
         />
-      )
-    );
-  }
+      )),
+    [personalize.active, personalize.active_type, personalize.hover, personalizeElements]
+  );
 
-  render() {
-    // if (this.props.details.side === "L") {
-    //   console.log('left');
-    //   document.querySelector('.image-wrapper').classList.add('left-render');
-    // } else {
-    //   console.log('right');
-    // }
-    return (
-      <div className="col-wrapper personalize">
-        <div className="col-2 render-wrapper">
-          {/* wyswietlanie renderu dla lewej/prawej w zaleznosci od wybranej strony - przemyslec jak zrobic lepiej*/}
-          {this.props.details.side === 'L' ? (
-            <ImagesWrapperLeft>{this.renderImages()}</ImagesWrapperLeft>
-          ) : (
-            <ImagesWrapper>{this.renderImages()}</ImagesWrapper>
-          )}
+  return (
+    <div className="col-wrapper personalize">
+      <div className="col-2 render-wrapper">
+        {details.side === 'L' ? (
+          <ImagesWrapperLeft>{images}</ImagesWrapperLeft>
+        ) : (
+          <ImagesWrapper>{images}</ImagesWrapper>
+        )}
 
-          <PartsWrapper>{this.renderParts()}</PartsWrapper>
-          {/* <p>
-            Choose element of the prosthetic and adjust colours and finishing.
-          </p>
-          <hr /> */}
-        </div>
-        <div className="col-1">
-          <div className="finishing-interface__wrapper">
-            <ColorsWrapper>
-              {/* <h3>Color</h3> */}
-              <div className="pallete-wrapper">{this.renderColors()}</div>
-              <FinishingWrapper>{this.renderFinishing()}</FinishingWrapper>
-            </ColorsWrapper>
-          </div>
+        <PartsWrapper>{parts}</PartsWrapper>
+      </div>
+      <div className="col-1">
+        <div className="finishing-interface__wrapper">
+          <ColorsWrapper>
+            <div className="pallete-wrapper">{colors}</div>
+            <FinishingWrapper>{finishingOptions}</FinishingWrapper>
+          </ColorsWrapper>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PersonalizeContainer);
+export default PersonalizeContainer;

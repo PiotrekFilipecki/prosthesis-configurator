@@ -68,81 +68,97 @@ const initialState = {
   }
 }
 
+function getActiveElements(state) {
+  return state.type[state.active_type];
+}
+
+function updateActiveElement(state, updater) {
+  if (!state.active) {
+    return state;
+  }
+
+  const activeTypeElements = getActiveElements(state);
+  const nextActiveElement = {
+    ...activeTypeElements[state.active],
+    ...updater(activeTypeElements[state.active])
+  };
+
+  return {
+    ...state,
+    type: {
+      ...state.type,
+      [state.active_type]: {
+        ...activeTypeElements,
+        [state.active]: nextActiveElement
+      }
+    }
+  };
+}
+
 const personalize = createReducer(initialState, {
-  [Actions.ASSETS_LOADED](state, action) {
+  [Actions.ASSETS_LOADED](state) {
     return {
       ...state,
       assetsLoaded: true
-    }
+    };
   },
 
-  [Actions.START_PERSONALIZATION](state, action) {
-    const elements = state.type[state.active_type];
+  [Actions.START_PERSONALIZATION](state) {
+    const elements = getActiveElements(state);
     const active = Object.keys(elements)[0];
 
     return {
       ...state,
       active
-    }
+    };
   },
 
-  [Actions.RESTART_PERSONALIZATION](state, action) {
-    const active = undefined;
-
+  [Actions.RESTART_PERSONALIZATION](state) {
     return {
       ...state,
-      active
-    }
+      active: undefined,
+      hover: undefined
+    };
   },
 
   [Actions.SELECT_TYPE](state, action) {
     return {
       ...state,
       active_type: action.typ
-    }
+    };
   },
 
   [Actions.SELECT_COLOR](state, action) {
-    const elements = state.type[state.active_type];
-    elements[state.active].selectedColor = action.color;
-    return {
-      ...state,
-      elements
-    }
+    return updateActiveElement(state, () => ({
+      selectedColor: action.color
+    }));
   },
 
   [Actions.SELECT_FINISHING](state, action) {
-    const elements = state.type[state.active_type];
-    elements[state.active].selectedFinishing = action.finishing;
-    return {
-      ...state,
-      elements
-    }
+    return updateActiveElement(state, () => ({
+      selectedFinishing: action.finishing
+    }));
   },
 
   [Actions.MOUSE_OVER_PART](state, action) {
     return {
       ...state,
       hover: action.id
-    }
+    };
   },
 
-  [Actions.MOUSE_OUT_PART](state, action) {
+  [Actions.MOUSE_OUT_PART](state) {
     return {
       ...state,
       hover: null
-    }
+    };
   },
 
   [Actions.SELECT_PART](state, action) {
-    let {active} = state;
-    active = action.id;
-    // use mapID
-    // elements[mapID[action.id]].selectedFinishing = action.finishing;
     return {
       ...state,
-      active
-    }
+      active: action.id
+    };
   }
 });
 

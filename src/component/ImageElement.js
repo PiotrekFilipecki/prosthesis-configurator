@@ -9,7 +9,7 @@ const IMAGE_PATH = process.env.PUBLIC_URL + '/images';
  * }
  * image: Image
  */
-export const ImageElement = props => {
+export const ImageElement = React.memo((props) => {
   return (
     <div
       className='image-element'
@@ -20,8 +20,8 @@ export const ImageElement = props => {
             ${props.active ? 'image-active' : ''}`
           } alt="" />
     </div>
-  )
-}
+  );
+});
 
 export const ImagesWrapper = props => {
   return (
@@ -32,13 +32,11 @@ export const ImagesWrapper = props => {
 }
 
 export const ImagesWrapperLeft = props => {
-
-  console.log(props, 'hehe');
   return (
     <div className="image-wrapper left-render" >
       {props.children}
     </div>
-  )
+  );
 }
 
 //className={`${props.details.side === 'L' ? 'image-wrapper render-left' : 'image-wrapper'}`}//

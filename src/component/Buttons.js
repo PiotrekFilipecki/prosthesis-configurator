@@ -1,9 +1,11 @@
 import React from 'react';
+
 export const Button = props => {
   return (
     <button
       className={`button ${props.disabled ? 'disabled' : ''} ${props.className}`}
-      onClick={() => props.onClick()}
+      type="button"
+      onClick={props.onClick}
       disabled={props.disabled}
     >
       {props.children}
@@ -14,7 +16,7 @@ export const Button = props => {
 
 export const BackSummaryButton = props => {
   return (
-    <button className="button summary-back" onClick={() => props.onClick()}>
+    <button className="button summary-back" type="button" onClick={props.onClick}>
       {props.label}
     </button>
   );

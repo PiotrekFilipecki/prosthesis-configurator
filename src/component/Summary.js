@@ -16,7 +16,7 @@ export const SummaryLine = props => {
 export const SummaryOverlay = props => {
   return (
     <div className="summary-overlay">
-      <div class="loader-spiner">Generating pdf...</div>
+      <div className="loader-spiner">Generating pdf...</div>
       <p>Generating pdf...</p>
     </div>
   );
