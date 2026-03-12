@@ -1,12 +1,4 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { ColorBox, ColorsWrapper } from '../component/Colors';
-import { FinishingBox, FinishingWrapper } from '../component/Finishing';
-import {
-  ImageElement,
-  ImagesWrapper,
-  ImagesWrapperLeft
-} from '../component/ImageElement';
-import { PartsBox, PartsWrapper } from '../component/Parts';
 import {
   onMouseOut,
   onMouseOver,
@@ -15,13 +7,24 @@ import {
   selectPart,
   startPersonalization
 } from '../actions';
-import { getObjectEntries } from '../helpers/object';
 import {
   selectActivePart,
   selectDetails,
   selectPersonalize,
   selectPersonalizeElements
 } from '../selectors';
+import { getObjectEntries } from '../shared/lib/object';
+import {
+  ColorBox,
+  ColorsWrapper,
+  FinishingBox,
+  FinishingWrapper,
+  ImageElement,
+  ImagesWrapper,
+  ImagesWrapperLeft,
+  PartsBox,
+  PartsWrapper
+} from '../shared/ui';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { colorIds, finishingKeys } from '../types/personalize';
 

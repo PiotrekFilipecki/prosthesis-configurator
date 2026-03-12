@@ -1,18 +1,20 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Button, ButtonsWrapper } from '../component/Buttons';
-import {
-  ImageElement,
-  ImagesWrapper,
-  ImagesWrapperLeft
-} from '../component/ImageElement';
-import { SummaryLine, SummaryOverlay } from '../component/Summary';
 import downloadIco from '../component/download-pdf.svg';
-import { getObjectEntries } from '../helpers/object';
 import {
   selectDetails,
   selectPersonalize,
   selectPersonalizeElements
 } from '../selectors';
+import { getObjectEntries } from '../shared/lib/object';
+import {
+  Button,
+  ButtonsWrapper,
+  ImageElement,
+  ImagesWrapper,
+  ImagesWrapperLeft,
+  SummaryLine,
+  SummaryOverlay
+} from '../shared/ui';
 import { useAppSelector } from '../store/hooks';
 import { measurementFieldIds, orderInfoFieldIds } from '../types/details';
 

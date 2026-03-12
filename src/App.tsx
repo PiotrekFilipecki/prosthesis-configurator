@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { assetsLoaded, nextStep, prevStep, restartPersonalization } from './actions';
-import { BackSummaryButton, Button, ButtonsWrapper } from './component/Buttons';
-import { StepItem, StepsWrapper } from './component/Steps';
 import MeasurmentContainer from './containers/MeasurmentContainer';
 import PersonalizeContainer from './containers/PersonalizeContainer';
 import SideContainer from './containers/SideContainer';
@@ -9,6 +7,7 @@ import SummaryContainer from './containers/SummaryContainer';
 import TypeContainer from './containers/TypeContainer';
 import loadAssets from './imagesList';
 import { selectApp, selectDetails, selectPersonalize } from './selectors';
+import { BackSummaryButton, Button, ButtonsWrapper, StepItem, StepsWrapper } from './shared/ui';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import type { StepId } from './types/app';
 import configLogo from './configLogo.png';

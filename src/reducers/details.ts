@@ -1,5 +1,5 @@
 import { Actions, type AppAction } from '../actions';
-import createReducer from '../helpers/createReducer';
+import createReducer from '../shared/lib/createReducer';
 import type {
   DetailsState,
   MeasurementsState,

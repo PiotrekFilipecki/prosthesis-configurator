@@ -1,20 +1,26 @@
 import React, { useCallback, useMemo } from 'react';
 import { onInputMeasurment, onInputOrderInfo } from '../actions';
-import { FormField, FormFieldOrder, FormWrapper } from '../component/Form';
+import { getObjectEntries } from '../shared/lib/object';
 import {
+  FormField,
+  FormFieldOrder,
+  FormWrapper,
   ImageElement,
   ImagesWrapper,
   ImagesWrapperLeft
-} from '../component/ImageElement';
-import { measurementFieldIds, orderInfoFieldIds } from '../types/details';
+} from '../shared/ui';
 import {
   selectDetails,
   selectPersonalize,
   selectPersonalizeElements
 } from '../selectors';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import type { MeasurementFieldId, OrderInfoFieldId } from '../types/details';
-import { getObjectEntries } from '../helpers/object';
+import {
+  measurementFieldIds,
+  orderInfoFieldIds,
+  type MeasurementFieldId,
+  type OrderInfoFieldId
+} from '../types/details';
 
 const MeasurmentContainer: React.FC = () => {
   const dispatch = useAppDispatch();

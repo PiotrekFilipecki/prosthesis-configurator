@@ -1,5 +1,5 @@
 import { Actions, type AppAction } from '../actions';
-import createReducer from '../helpers/createReducer';
+import createReducer from '../shared/lib/createReducer';
 import type { AppState, StepId } from '../types/app';
 
 const FIRST_STEP: StepId = 1;
