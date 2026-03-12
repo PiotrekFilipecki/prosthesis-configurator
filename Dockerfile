@@ -1,9 +1,23 @@
-FROM node:20-bookworm-slim AS build
+FROM node:20-bookworm-slim AS base
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm ci
+
+FROM base AS development
+
+COPY . .
+
+ENV HOST=0.0.0.0
+ENV CHOKIDAR_USEPOLLING=true
+ENV WATCHPACK_POLLING=true
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+
+FROM base AS build
 
 COPY . .
 RUN npm run build
